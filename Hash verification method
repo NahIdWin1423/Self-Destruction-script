@@ -1,0 +1,23 @@
+(function() {
+    const originalCode = `console.log("This is a secure script.");`;
+    const hash = "5d41402abc4b2a76b9719d911017c592"; // Hash of "hello"
+
+    // Function to self-destruct
+    function selfDestruct() {
+        console.log("Tampering detected! Self-destructing...");
+        // Overwrite the script content
+        this.console.log = function() {}; // Disable console logging
+    }
+
+    // Check for tampering using hash
+    function verifyIntegrity() {
+        const currentHash = md5(originalCode); // Assume md5 is a function that generates hash
+        return currentHash === hash;
+    }
+
+    if (!verifyIntegrity()) {
+        selfDestruct();
+    } else {
+        eval(originalCode);
+    }
+})();
