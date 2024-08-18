@@ -1,0 +1,18 @@
+(function() {
+    const originalCode = `console.log("This is a secure script.");`;
+
+    // Function to self-destruct
+    function selfDestruct() {
+        console.log("Tampering detected! Self-destructing...");
+        // Overwrite the script content
+        eval("this.selfDestruct = function() {};"); // Prevent further execution
+        this.console.log = function() {}; // Disable console logging
+    }
+
+    // Check for tampering
+    if (originalCode !== String(eval("console.log.toString()"))) {
+        selfDestruct();
+    } else {
+        eval(originalCode);
+    }
+})();
